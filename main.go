@@ -175,7 +175,7 @@ func getAvailability(model string, cityStores map[string]map[string]string) (str
     for storeNumber := range cityStores {
         availability := gjson.Get(body, "stores." + storeNumber + "." + getModelCode(model) + ".availability")
         if availability.Map()["contract"].Bool() && availability.Map()["unlocked"].Bool() {
-            return storeNumber, strings.Split(model, "-")[1]
+            return storeNumber, getModelCode(model)
         } else {
             log.Println(selectedCity, cityStores[storeNumber]["name"], selectedModel, "无货")
         }
@@ -277,7 +277,7 @@ func main() {
 
         storeNumber, modelCode := getAvailability(selectedModel, storeCityMap[selectedCity])
         if storeNumber != "" && modelCode != "" {
-            url := getReserveUrlByModel(selectedModel, modelCode)
+            url := getReserveUrlByModel(selectedModel, storeNumber)
 
             fmt.Println(url)
 
