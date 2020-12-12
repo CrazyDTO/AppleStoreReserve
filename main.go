@@ -133,7 +133,7 @@ SELECTMODEL:
         goto SELECTMODEL
     }
 
-    selectedModel = models[modelIndex]
+    selectedModel = strings.Split(models[modelIndex], "-")[0]
     fmt.Println("您选择的型号为：", selectedModel)
 }
 
